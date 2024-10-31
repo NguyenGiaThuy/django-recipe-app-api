@@ -8,29 +8,30 @@ from django.utils.translation import gettext_lazy as translate
 from core import models
 
 
+@admin.register(models.User)
 class UserAdmin(BaseUserAdmin):
     """Define the admin pages for users."""
-    ordering = ['id']
-    list_display = ['email', 'name']
-    fieldsets = [
-        (None, {'fields': ['email', 'password']}),
+    ordering = ('id',)
+    list_display = ('email', 'name',)
+    fieldsets = (
+        (None, {'fields': ('email', 'password',)}),
         (
             translate('Permissions'),
             {
-                'fields': [
+                'fields': (
                     'is_active',
                     'is_staff',
-                    'is_superuser'
-                ]
+                    'is_superuser',
+                ),
             }
         ),
-        (translate('Important dates'), {'fields': ['last_login']})
-    ]
-    readonly_fields = ['last_login']
-    add_fieldsets = [
+        (translate('Important dates'), {'fields': ['last_login']}),
+    )
+    readonly_fields = ('last_login',)
+    add_fieldsets = (
         (None, {
-            'classes': ['wide'],
-            'fields': [
+            'classes': ('wide',),
+            'fields': (
                 'email',
                 'password1',
                 'password2',
@@ -38,9 +39,7 @@ class UserAdmin(BaseUserAdmin):
                 'is_active',
                 'is_staff',
                 'is_superuser',
-            ]
-        })
-    ]
+            ),
+        }),
+    )
 
-
-admin.site.register(models.User, UserAdmin)
